@@ -1,0 +1,7 @@
+El modelo es la lógica de negocio o la parte que se conecta directamente a la base de datos
+
+La vista es la encargada de mostrar la información al usuario. En este caso como es una API Rest, a modo de objetos JSON.
+
+El controlador es el intermediario entre la vista y el modelo y se encarga de controlar todas las interacciones del usuario
+y todas las peticiones que se vayan realizando mediante HTTP. Además pide los datos al modelo, devuelve información por JSON
+y hace cierta lógica que vaya a tener nuestro programa.

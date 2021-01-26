@@ -75,7 +75,7 @@ var controller = {
 		var projectId = req.params.id;
 		var update = req.body;
 
-		Project.findByIdAndUpdate(projectId, update, (err, projectUpdated) => {
+		Project.findByIdAndUpdate(projectId, update, {new: true}, (err, projectUpdated) => {
 			if (err) return res.status(500).send({message: 'Error al actualizar.'});
 
 			if (!projectUpdated) return res.status(404).send({message: 'No existe el proyecto para actualizar'});
@@ -84,6 +84,20 @@ var controller = {
 				project: projectUpdated
 			});
 			 
+		});
+	},
+
+	deleteProject: function(req, res){
+		var projectId = req.params.id;
+
+		Project.findByIdAndRemove(projectId, (err, projectDeleted) => {
+			if (err) return res.status(500).send({message: 'No se ha podido borrar el proyecto.'});
+
+			if (!projectDeleted) return res.status(404).send({message: 'No se puede eliminar ese proyecto.'});
+
+			return res.status(200).send({
+				project: projectDeleted
+			});
 		});
 	}
 };

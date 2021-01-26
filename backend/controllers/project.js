@@ -50,11 +50,40 @@ var controller = {
 		Project.findById(projectId, (err, project) => {
 			if (err) return res.status(500).send({message: 'Error al devolver los datos.'});
 
-			if (!project) return res.status(404).send({message: 'El proyecto no existe'});
+			if (!project) return res.status(404).send({message: 'El proyecto no existe.'});
 
 			return res.status(200).send({
 				project
 			});
+		});
+	},
+
+	getProjects: function(req, res){
+
+		Project.find({/*year: 2019*/}).sort('-year').exec((err, projects) => { // (Cualq. condición/es p/ filtrar)
+			if (err) return res.status(500).send({message: 'Error al devolver los datos.'});
+
+			if (!projects) return res.status(404).send({message: 'No hay proyectos para mostrar.'});
+
+			return res.status(200).send({
+				projects
+			});
+		});
+	},
+
+	updateProject: function(req, res){
+		var projectId = req.params.id;
+		var update = req.body;
+
+		Project.findByIdAndUpdate(projectId, update, (err, projectUpdated) => {
+			if (err) return res.status(500).send({message: 'Error al actualizar.'});
+
+			if (!projectUpdated) return res.status(404).send({message: 'No existe el proyecto para actualizar'});
+
+			return res.status(200).send({
+				project: projectUpdated
+			});
+			 
 		});
 	}
 };
